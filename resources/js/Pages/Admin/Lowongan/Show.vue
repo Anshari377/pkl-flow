@@ -1,0 +1,129 @@
+<script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+const lowongan = ref({
+    id: 1,
+    nama: 'Aplikasi dan Layanan E-Government',
+    instansi: 'Diskominfo Kaltim',
+    deskripsi: 'Bidang ini menangani pengembangan dan pemeliharaan aplikasi layanan pemerintah berbasis elektronik (e-Government) untuk memudahkan akses layanan publik di Kalimantan Timur.',
+    kualifikasi: 'Mahasiswa/Siswa jurusan Teknik Informatika, Sistem Informasi, atau bidang terkait. Menguasai dasar pemrograman web (HTML, CSS, JavaScript). Berhasil menyelesaikan proses seleksi.',
+    kuota_total: 8,
+    terisi_total: 5,
+    status: 'aktif',
+    created_at: '2026-08-01',
+    posisi: [
+        { id: 1, nama: 'Web Developer', kuota: 3, terisi: 2, jurusan: ['Teknik Informatika', 'Sistem Informasi'] },
+        { id: 2, nama: 'Mobile App Developer', kuota: 2, terisi: 1, jurusan: ['Teknik Informatika'] },
+        { id: 3, nama: 'UI/UX Designer', kuota: 1, terisi: 1, jurusan: ['Desain Komunikasi Visual', 'Teknik Informatika'] },
+        { id: 4, nama: 'Database Administrator', kuota: 2, terisi: 1, jurusan: ['Teknik Informatika', 'Sistem Informasi'] },
+    ],
+});
+
+const handleToggleStatus = () => {
+    lowongan.value.status = lowongan.value.status === 'aktif' ? 'nonaktif' : 'aktif';
+};
+</script>
+
+<template>
+    <Head title="Detail Lowongan" />
+    <AppLayout title="Detail Lowongan PKL">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <!-- Left: Detail Info -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Main Info -->
+                <div class="glass-panel p-6 sm:p-8">
+                    <div class="mb-6 flex items-center justify-between">
+                        <div>
+                            <h2 class="font-display text-2xl font-bold text-ink-900">{{ lowongan.nama }}</h2>
+                            <p class="mt-1 text-sm text-ink-500">{{ lowongan.instansi }} · Dibuat {{ lowongan.created_at }}</p>
+                        </div>
+                        <span
+                            :class="lowongan.status === 'aktif' ? 'badge-success' : 'badge-danger'"
+                            class="badge"
+                        >
+                            {{ lowongan.status === 'aktif' ? 'Aktif' : 'Nonaktif' }}
+                        </span>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div>
+                            <h3 class="text-xs font-medium text-ink-500 uppercase tracking-wider mb-2">Deskripsi Bidang</h3>
+                            <p class="text-sm text-ink-800 leading-relaxed">{{ lowongan.deskripsi }}</p>
+                        </div>
+                        <div class="border-t border-ink-300/30 pt-4">
+                            <h3 class="text-xs font-medium text-ink-500 uppercase tracking-wider mb-2">Kualifikasi</h3>
+                            <p class="text-sm text-ink-800 leading-relaxed">{{ lowongan.kualifikasi }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Posisi Table -->
+                <div class="glass-panel p-6">
+                    <div class="mb-4 flex items-center justify-between">
+                        <h3 class="font-display text-base font-bold text-ink-900">Daftar Posisi</h3>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[560px] text-left text-sm">
+                            <thead class="border-b border-ink-300/35 text-xs uppercase tracking-wider text-ink-500">
+                                <tr>
+                                    <th class="px-4 py-3">No</th>
+                                    <th class="px-4 py-3">Nama Posisi</th>
+                                    <th class="px-4 py-3">Kuota</th>
+                                    <th class="px-4 py-3">Terisi</th>
+                                    <th class="px-4 py-3">Jurusan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-ink-300/20">
+                                <tr v-for="(pos, index) in lowongan.posisi" :key="pos.id" class="transition hover:bg-forest-50/60">
+                                    <td class="px-4 py-3.5 text-ink-500">{{ index + 1 }}</td>
+                                    <td class="px-4 py-3.5 font-semibold text-ink-900">{{ pos.nama }}</td>
+                                    <td class="px-4 py-3.5 text-ink-700">{{ pos.kuota }}</td>
+                                    <td class="px-4 py-3.5 text-ink-700">{{ pos.terisi }}</td>
+                                    <td class="px-4 py-3.5">
+                                        <div class="flex flex-wrap gap-1">
+                                            <span v-for="j in pos.jurusan" :key="j" class="badge badge-info text-[10px]">{{ j }}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Sidebar Card -->
+            <div class="space-y-6">
+                <div class="glass-card p-6 space-y-4 h-fit">
+                    <h3 class="font-display text-base font-bold text-ink-900 border-b border-ink-300/30 pb-3">
+                        Ringkasan Kuota
+                    </h3>
+                    <div>
+                        <p class="text-xs font-medium text-ink-500 uppercase tracking-wider">Total Kuota</p>
+                        <p class="mt-1 font-display text-2xl font-bold text-ink-900">{{ lowongan.kuota_total }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-ink-500 uppercase tracking-wider">Terisi</p>
+                        <p class="mt-1 font-display text-2xl font-bold text-forest-700">{{ lowongan.terisi_total }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-ink-500 uppercase tracking-wider">Sisa Kuota</p>
+                        <p class="mt-1 font-display text-2xl font-bold" :class="lowongan.kuota_total - lowongan.terisi_total > 0 ? 'text-status-success' : 'text-status-danger'">
+                            {{ lowongan.kuota_total - lowongan.terisi_total }}
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-ink-300/30 space-y-2">
+                        <Link :href="route('admin.lowongan.edit', lowongan.id)" class="btn-primary w-full text-center text-sm">
+                            Edit Lowongan
+                        </Link>
+                        <button @click="handleToggleStatus" class="btn-secondary w-full text-sm">
+                            {{ lowongan.status === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }} Lowongan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AppLayout>
+</template>
