@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        @apply antialiased;
+    }
+    body {
+        @apply bg-gradient-to-br from-white via-emerald-50 to-green-100 bg-fixed text-ink-900 font-sans min-h-screen;
+    }
+    h1, h2, h3 {
+        @apply font-display;
+    }
+}
+
+@layer components {
+    .glass-panel {
+        @apply rounded-2xl border border-white/70 bg-white/60 shadow-[0_8px_32px_rgba(15,74,48,0.08)] backdrop-blur-xl;
+    }
+
+    .glass-card {
+        @apply rounded-2xl border border-white/60 bg-white/70 shadow-sm backdrop-blur-md;
+    }
+
+    .stat-card {
+        @apply glass-card p-5;
+    }
+
+    .badge {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium;
+    }
+    .badge-success { @apply bg-status-success/10 text-status-success; }
+    .badge-warning { @apply bg-status-warning/15 text-gold-500; }
+    .badge-danger  { @apply bg-status-danger/10 text-status-danger; }
+    .badge-info    { @apply bg-status-info/10 text-forest-600; }
+
+    .btn-primary {
+         @apply inline-flex items-center justify-center gap-2 rounded-lg bg-forest-600 px-4 py-2.5
+             text-sm font-medium text-white transition hover:bg-forest-700
+             focus:outline-none focus:ring-2 focus:ring-forest-500 focus:ring-offset-2;
+    }
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg border border-ink-300
+               bg-white px-4 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-surface
+               focus:outline-none focus:ring-2 focus:ring-forest-500 focus:ring-offset-2;
+    }
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg bg-status-danger px-4 py-2.5
+               text-sm font-medium text-white transition hover:bg-red-600
+               focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+    }
+    .btn-success {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg bg-status-success px-4 py-2.5
+               text-sm font-medium text-white transition hover:bg-green-600
+               focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
+    }
+    .field-label {
+        @apply mb-1.5 block text-sm font-medium text-ink-700;
+    }
+    .field-input {
+        @apply w-full rounded-lg border border-ink-300 bg-white px-3.5 py-2.5 text-sm text-ink-900
+               placeholder:text-ink-300 focus:border-forest-500 focus:outline-none focus:ring-2 focus:ring-forest-500/20;
+    }
+}
