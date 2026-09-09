@@ -58,6 +58,18 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/profile', fn () => \Inertia\Inertia::render('Admin/Profile/Edit', ['activeNav' => 'admin.profile']))->name('profile.edit');
         });
+
+        // Super Admin Portal Routes (frontend-only review, no role middleware yet)
+        Route::prefix('super-admin')->name('superadmin.')->group(function () {
+            Route::get('/dashboard', fn () => \Inertia\Inertia::render('SuperAdmin/Dashboard', ['activeNav' => 'superadmin.dashboard']))->name('dashboard');
+
+            Route::get('/instansi', fn () => \Inertia\Inertia::render('SuperAdmin/Instansi/Index', ['activeNav' => 'superadmin.instansi']))->name('instansi.index');
+            Route::get('/instansi/{instansi}', fn () => \Inertia\Inertia::render('SuperAdmin/Instansi/Show', ['activeNav' => 'superadmin.instansi']))->name('instansi.show');
+
+            Route::get('/undangan', fn () => \Inertia\Inertia::render('SuperAdmin/Undangan/Index', ['activeNav' => 'superadmin.undangan']))->name('undangan.index');
+
+            Route::get('/audit-log', fn () => \Inertia\Inertia::render('SuperAdmin/AuditLog/Index', ['activeNav' => 'superadmin.audit-log']))->name('audit-log.index');
+        });
     });
 });
 

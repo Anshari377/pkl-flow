@@ -1,0 +1,153 @@
+<script setup>
+import { ref } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
+
+defineProps({ title: { type: String, default: '' } });
+
+const page = usePage();
+const sidebarOpen = ref(true);
+const avatarFailed = ref(false);
+
+const superAdminNav = [
+    { label: 'Dashboard', href: route('superadmin.dashboard'), active: 'superadmin.dashboard', icon: 'home' },
+    { label: 'Manajemen Instansi', href: route('superadmin.instansi.index'), active: 'superadmin.instansi', icon: 'building' },
+    { label: 'Undangan Admin Instansi', href: route('superadmin.undangan.index'), active: 'superadmin.undangan', icon: 'user-plus' },
+    { label: 'Audit Log', href: route('superadmin.audit-log.index'), active: 'superadmin.audit-log', icon: 'file-text' },
+];
+
+const current = page.props.activeNav ?? '';
+</script>
+
+<template>
+    <div class="flex min-h-screen bg-surface">
+        <!-- Sidebar - Dark Green Gradient with Ulap Doyo Batik Pattern -->
+        <aside
+            :class="[sidebarOpen ? 'w-64' : 'w-[76px]']"
+            class="relative flex flex-col shrink-0 overflow-visible bg-gradient-to-b from-forest-950 via-forest-800 to-forest-600 text-white transition-all duration-200"
+        >
+            <!-- Ulap Doyo Batik SVG Pattern Watermark -->
+            <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-[0.07]" aria-hidden="true">
+                <defs>
+                    <pattern id="ulap-doyo-superadmin" width="48" height="48" patternUnits="userSpaceOnUse">
+                        <path d="M24 0 L48 24 L24 48 L0 24 Z" fill="none" stroke="currentColor" stroke-width="1" />
+                        <path d="M24 8 L40 24 L24 40 L8 24 Z" fill="none" stroke="currentColor" stroke-width="0.8" />
+                        <path d="M24 14 L34 24 L24 34 L14 24 Z" fill="none" stroke="currentColor" stroke-width="0.6" />
+                        <line x1="0" y1="0" x2="48" y2="48" stroke="currentColor" stroke-width="0.5" />
+                        <line x1="48" y1="0" x2="0" y2="48" stroke="currentColor" stroke-width="0.5" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#ulap-doyo-superadmin)" class="text-gold-400" />
+            </svg>
+
+            <!-- Sidebar Header / Logo -->
+            <div class="relative flex items-center gap-3 px-5 py-5 border-b border-white/10">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 text-gold-400 shadow-inner">
+                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div v-if="sidebarOpen" class="flex flex-col">
+                    <span class="font-display text-base font-bold tracking-tight text-white">PKL Flow</span>
+                    <span class="text-[10px] text-gold-400 font-medium tracking-wider uppercase">Super Admin</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex flex-1 flex-col px-3 py-4">
+                <Link
+                    v-for="item in superAdminNav"
+                    :key="item.href"
+                    :href="item.href"
+                    :class="[
+                        current === item.active
+                            ? 'bg-white/10 text-white font-semibold border-l-4 border-gold-400'
+                            : 'text-white/70 hover:bg-white/5 hover:text-white border-l-4 border-transparent',
+                    ]"
+                    class="flex items-center gap-3 px-4 py-3 text-sm transition-colors duration-200"
+                >
+                    <span class="grid h-5 w-5 shrink-0 place-items-center">
+                        <template v-if="item.icon === 'home'">
+                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                        </template>
+                        <template v-else-if="item.icon === 'building'">
+                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"/>
+                            </svg>
+                        </template>
+                        <template v-else-if="item.icon === 'user-plus'">
+                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+                            </svg>
+                        </template>
+                        <template v-else-if="item.icon === 'file-text'">
+                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                            </svg>
+                        </template>
+                    </span>
+                    <span v-if="sidebarOpen" class="truncate">{{ item.label }}</span>
+                </Link>
+            </nav>
+
+            <!-- Toggle Sidebar -->
+            <button
+                class="relative m-3 flex items-center justify-center rounded-lg py-2 text-white/60 hover:bg-white/5 hover:text-white"
+                @click="sidebarOpen = !sidebarOpen"
+            >
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
+                </svg>
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex flex-1 flex-col min-w-0">
+            <!-- Floating Glass Header -->
+            <header class="glass-panel m-3 flex items-center justify-between px-6 py-3.5">
+                <h1 class="font-display text-lg font-semibold text-ink-900">{{ title }}</h1>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-3 group">
+                        <div class="grid h-9 w-9 place-items-center rounded-full bg-forest-700 text-xs font-semibold text-white shadow-sm transition group-hover:bg-forest-600 overflow-hidden shrink-0">
+                            <img
+                                v-if="page.props.auth?.user?.avatar && !avatarFailed"
+                                :src="page.props.auth.user.avatar"
+                                :alt="page.props.auth?.user?.name || 'User Avatar'"
+                                class="h-full w-full object-cover"
+                                @error="avatarFailed = true"
+                            />
+                            <span v-else>
+                                {{ (page.props.auth?.user?.name ?? 'SA').split(' ').map(w => w[0]).slice(0,2).join('') }}
+                            </span>
+                        </div>
+                        <span class="flex flex-col">
+                            <span class="text-sm font-medium text-ink-700 transition">
+                                {{ page.props.auth?.user?.name ?? 'Super Admin' }}
+                            </span>
+                            <span class="inline-flex w-fit items-center gap-1 rounded-full bg-gold-500/15 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-gold-500">
+                                <svg viewBox="0 0 24 24" class="h-2.5 w-2.5" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                Super Admin
+                            </span>
+                        </span>
+                    </div>
+                    <Link :href="route('logout')" method="post" as="button" class="text-xs font-medium text-ink-500 hover:text-status-danger transition">
+                        Keluar
+                    </Link>
+                </div>
+            </header>
+
+            <main class="flex-1 p-6">
+                <div v-if="page.props.flash?.error" class="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 shadow-sm">
+                    {{ page.props.flash.error }}
+                </div>
+                <div v-if="page.props.flash?.success" class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700 shadow-sm">
+                    {{ page.props.flash.success }}
+                </div>
+                <slot />
+            </main>
+        </div>
+    </div>
+</template>
