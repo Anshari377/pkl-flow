@@ -17,7 +17,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'ensure.onboarded' => \App\Http\Middleware\EnsureOnboarded::class,
             'ensure.kelompok' => \App\Http\Middleware\EnsureTipeKelompok::class,
         ]);
     })

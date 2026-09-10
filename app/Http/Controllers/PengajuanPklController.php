@@ -63,6 +63,10 @@ class PengajuanPklController extends Controller
         $endDate = $data['end_date'];
         $requestedSize = 1 + count($data['members'] ?? []);
 
+        $request->user()->update([
+            'tipe_pendaftaran' => $data['tipe'],
+        ]);
+
         $overlappingApps = Application::where('division_id', $divisionId)
             ->where('status', 'accepted')
             ->where(function ($query) use ($startDate, $endDate) {

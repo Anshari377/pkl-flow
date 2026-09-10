@@ -40,10 +40,6 @@ class GoogleAuthController extends Controller
 
         Auth::login($user);
 
-        if (is_null($user->tipe_pendaftaran)) {
-            return redirect()->route('onboarding.tipe');
-        }
-
         return redirect()->route('home');
     }
 }
